@@ -61,17 +61,32 @@ namespace SecondTask
         /// <param name="value">Value</param>
         public void CheckValue(int value)
         {
-            if (value > 0)
+            // TODO: Before
+            //if (value > 0)
+            //{
+            //    Console.WriteLine("Bigger than 0"); 
+            //}
+            //else if (value < 0)
+            //{
+            //    Console.WriteLine("Less than 0");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Equal");
+            //}
+
+            // TODO: After
+            switch (value)
             {
-                Console.WriteLine("Bigger than 0"); 
-            }
-            else if (value < 0)
-            {
-                Console.WriteLine("Less than 0");
-            }
-            else
-            {
-                Console.WriteLine("Equal");
+                case > 0:
+                    Console.WriteLine("Bigger than 0");
+                    break;
+                case < 0:
+                    Console.WriteLine("Less than 0");
+                    break;
+                default:
+                    Console.WriteLine("Equal");
+                    break;
             }
         }
 

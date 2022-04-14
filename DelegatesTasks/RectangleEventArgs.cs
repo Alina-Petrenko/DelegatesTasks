@@ -3,7 +3,7 @@
 namespace FirstTask
 {
     /// <summary>
-    /// Contains event data, and provides a value to use for events
+    /// Contains event data and provides a value to use for events
     /// </summary>
     public class RectangleEventArgs : EventArgs
     {

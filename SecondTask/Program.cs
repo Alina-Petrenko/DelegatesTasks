@@ -7,6 +7,9 @@ namespace SecondTask
     /// </summary>
     public class Program
     {
+        // TODO: In current case, Main() - it is private method
+        // TODO: Read this:
+        // https://stackoverflow.com/questions/3736019/c-sharp-default-access-modifier-of-main-method#:~:text=Both%2C%20the%20default%20class%20modifier,without%20a%20declaration%20are%20private.
         #region Public Methods
         /// <summary>
         /// Displays the results of working with a delegate
@@ -17,17 +20,24 @@ namespace SecondTask
             var firstSuperDelegate = new SuperDelegate(superClass.CheckValue);
             var secondSuperDelegate = new SuperDelegate(superClass.CheckValue);
 
-            Console.WriteLine($"\nMethod {nameof(superClass.PrintStringRepresentation)} subscribed to event");
+            // TODO: If message is "subscribed to event" then firstly we should DO an action and secondly we PRINT info about it
+            // TODO: You don't know when your application is crash. So notifying about action should be after this action.
+            // TODO: Before
+            //Console.WriteLine($"\nMethod {nameof(superClass.PrintStringRepresentation)} subscribed to event");
+            //superClass.SuperDelegateEvent += superClass.PrintStringRepresentation;
+            // TODO: After
             superClass.SuperDelegateEvent += superClass.PrintStringRepresentation;
+            Console.WriteLine($"\nMethod {nameof(superClass.PrintStringRepresentation)} subscribed to event");
+
             superClass.Value = 11;
             Console.WriteLine($"\nMethods {nameof(superClass.CheckValue)} and {nameof(superClass.PrintStringRepresentation)} subscribed to event");
             superClass.SuperDelegateEvent += superClass.CheckValue;
             superClass.Value = -1;
-            Console.WriteLine($"\nMethods {nameof(superClass.CheckValue)} and {nameof(superClass.PrintStringRepresentation)} unsubscripted from event");
+            Console.WriteLine($"\nMethods {nameof(superClass.CheckValue)} and {nameof(superClass.PrintStringRepresentation)} unsubscribed from event");
             superClass.SuperDelegateEvent -= superClass.PrintStringRepresentation;
             superClass.SuperDelegateEvent -= superClass.CheckValue;
             superClass.Value = 3;
-            Console.WriteLine("");
+            Console.WriteLine();
 
             firstSuperDelegate += superClass.CheckValue;
             firstSuperDelegate += superClass.CheckValue;

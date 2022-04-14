@@ -30,13 +30,21 @@ namespace FirstTask
         /// </summary>
         public int Length
         {
-            get { return _length; }
+            // TODO: Before
+            // get { return _length; }
+            // TODO: After
+            get => _length;
 
+            // TODO: compare this set and in Width
             set
             {
-                var rectangleEventArgs = new RectangleEventArgs();
-                rectangleEventArgs.Length = value;
-                ValidationEvent.Invoke(this, rectangleEventArgs);
+                var rectangleEventArgs = new RectangleEventArgs
+                {
+                    Length = value
+                };
+
+                ValidationEvent?.Invoke(this, rectangleEventArgs);
+
                 if (!rectangleEventArgs.Cancel)
                 {
                     _length = value;
@@ -73,8 +81,11 @@ namespace FirstTask
         /// <param name="width">Width</param>
         public Rectangle(int length, int width)
         {
+            // TODO: sender is never used. Change to "_"
             ValidationEvent += (sender, events) =>
             {
+                // TODO: Read this
+                // https://stackoverflow.com/questions/35301/what-is-the-difference-between-the-and-or-operators
                 if (width <= 0 | length <= 0)
                 {
                     events.Cancel = true;
