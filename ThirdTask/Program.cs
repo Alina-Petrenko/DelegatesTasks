@@ -13,14 +13,14 @@ namespace ThirdTask
         static void Main()
         {
             var delegateClass = new DelegateClass(67,-89,0);
-            Console.WriteLine($"Initial values: first: {delegateClass.FirstValue}, second: {delegateClass.SecondValue}, third: {delegateClass.ThirdValue}");
+            Console.WriteLine($"Initial values: first: {delegateClass.ActionValue}, second: {delegateClass.FuncValue}, third: {delegateClass.PredicateValue}");
 
             Console.WriteLine("\nResult of changing the first field");
-            delegateClass.FirstValue = 23;
+            delegateClass.ActionValue = 23;
             Console.WriteLine("\nResult of changing the second field");
-            delegateClass.SecondValue = 65;
+            delegateClass.FuncValue = 65;
             Console.WriteLine("\nResult of changing the third field");
-            delegateClass.ThirdValue = -43;
+            delegateClass.PredicateValue = -43;
         }
     }
 }

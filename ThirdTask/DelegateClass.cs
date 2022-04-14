@@ -3,7 +3,7 @@
 namespace ThirdTask
 {
     /// <summary>
-    /// Represents class for working with a delegate
+    /// Represents class for working with a delegates
     /// </summary>
     public class DelegateClass
     {
@@ -11,85 +11,94 @@ namespace ThirdTask
         /// <summary>
         /// First Value
         /// </summary>
-        private int _firstValue;
+        private int _actionValue;
 
         /// <summary>
         /// Second Value
         /// </summary>
-        private int _secondValue;
+        private int _funcValue;
 
         /// <summary>
         /// Third Value
         /// </summary>
-        private int _thirdValue;
+        private int _predicateValue;
         #endregion
 
         #region Constructors
-        public DelegateClass(int firstValue, int secondValue, int thirdValue)
+        // TODO: constructor should has summary too
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateClass" /> class.
+        /// </summary>
+        /// <param name="actionValue">First value</param>
+        /// <param name="funcValue">Second value</param>
+        /// <param name="predicateValue">Third value</param>
+        public DelegateClass(int actionValue, int funcValue, int predicateValue)
         {
-            FirstValue = firstValue;
-            SecondValue = secondValue;
-            ThirdValue = thirdValue;
-            FirstValueChangeHandler += NotifyActionFieldsChange;
-            SecondValueChangeHandler += NotifyFuncFieldsChange;
-            ThirdValueChangeHandler += NotifyPredicateFieldsChange;
+            ActionValue = actionValue;
+            FuncValue = funcValue;
+            PredicateValue = predicateValue;
+            ActionChangeHandler += NotifyActionFieldsChange;
+            FuncChangeHandler += NotifyFuncFieldsChange;
+            PredicateChangeHandler += NotifyPredicateFieldsChange;
         }
         #endregion
 
         #region Events
         /// <summary>
-        /// Event for changing the first value
+        /// Event for changing the <see cref="ActionValue"/>
         /// </summary>
-        event Action<object, int> FirstValueChangeHandler;
+        event Action<object, int> ActionChangeHandler;
+
+        // TODO: step 3 of the task is missed
 
         /// <summary>
-        /// Event for changing the second value
+        /// Event for changing the <see cref="FuncValue"/>
         /// </summary>
-        event Func<object, int, int> SecondValueChangeHandler;
+        event Func<object, int, int> FuncChangeHandler;
 
         /// <summary>
-        /// Event for changing the third value
+        /// Event for changing the <see cref="PredicateValue"/>
         /// </summary>
-        event Predicate<int> ThirdValueChangeHandler;
+        event Predicate<int> PredicateChangeHandler;
         #endregion
 
         #region Properties
         /// <summary>
         /// First Value
         /// </summary>
-        public int FirstValue
+        public int ActionValue
         {
-            get => _firstValue;
+            get => _actionValue;
             set
             {
-                FirstValueChangeHandler?.Invoke(this, _firstValue);
-                _firstValue = value;
+                ActionChangeHandler?.Invoke(this, _actionValue);
+                _actionValue = value;
             }
         }
 
         /// <summary>
         /// Second Value
         /// </summary>
-        public int SecondValue
+        public int FuncValue
         {
-            get => _secondValue;
+            get => _funcValue;
             set
             {
-                SecondValueChangeHandler?.Invoke(this, _secondValue);
-                _secondValue = value;               
+                FuncChangeHandler?.Invoke(this, _funcValue);
+                _funcValue = value;               
             }
         }
 
         /// <summary>
         /// Third Value
         /// </summary>
-        public int ThirdValue
+        public int PredicateValue
         {
-            get => _thirdValue;
+            get => _predicateValue;
             set
             {
-                _thirdValue = value;
-                ThirdValueChangeHandler?.Invoke(value);
+                _predicateValue = value;
+                PredicateChangeHandler?.Invoke(value);
             }
         }
         #endregion
@@ -103,7 +112,12 @@ namespace ThirdTask
         public void NotifyActionFieldsChange(object sender, int value)
         {
             var newSender = sender as DelegateClass;
-            Console.WriteLine($"The value: {newSender._firstValue} was change by {newSender}!");
+            // TODO: cast to type could make newSender = null
+            // TODO: need check for null
+            // TODO: Before
+            // Console.WriteLine($"The value: {newSender._actionValue} was change by {newSender}!");
+            // TODO: After
+            Console.WriteLine($"The value: {newSender?._actionValue} was change by {newSender}!");
         }
 
         /// <summary>
@@ -115,15 +129,15 @@ namespace ThirdTask
         public int NotifyFuncFieldsChange(object sender, int value)
         {
             var newSender = sender as DelegateClass;
-            var sum = _firstValue + _secondValue + _thirdValue;
-            Console.WriteLine($"The value: {value} was change by {newSender}! Sum: {newSender._firstValue} + {newSender._secondValue} + {newSender._thirdValue} = {sum}");
+            var sum = _actionValue + _funcValue + _predicateValue;
+            Console.WriteLine($"The value: {value} was change by {newSender}! Sum: {newSender._actionValue} + {newSender._funcValue} + {newSender._predicateValue} = {sum}");
             return sum;
         }
 
         /// <summary>
         /// Notifies of a change in the value of one of the fields
         /// </summary>
-        /// <param name="value">The value the field changed to<param>
+        /// <param name="value">The value the field changed to.</param>
         /// <returns>Returns the success value of the change</returns>
         public bool NotifyPredicateFieldsChange (int value)
         {
