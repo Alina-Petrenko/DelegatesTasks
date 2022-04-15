@@ -11,84 +11,115 @@ namespace ThirdTask
         /// <summary>
         /// First Value
         /// </summary>
-        private int _firstValue;
+        private int _actionValue;
 
         /// <summary>
-        /// Second Value
+        /// First Func Value
         /// </summary>
-        private int _secondValue;
+        private int _firstFuncValue;
+
+        /// <summary>
+        /// Second Func Value
+        /// </summary>
+        private int _secondFuncValue;
 
         /// <summary>
         /// Third Value
         /// </summary>
-        private int _thirdValue;
+        private int _predicateValue;
         #endregion
 
         #region Constructors
-        public DelegateClass(int firstValue, int secondValue, int thirdValue)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateClass" /> class.
+        /// </summary>
+        /// <param name="actionValue">First value</param>
+        /// <param name="firstFuncValue">Second value</param>
+        /// <param name="predicateValue">Third value</param>
+        public DelegateClass(int actionValue, int firstFuncValue, int predicateValue, int secondFuncValue)
         {
-            FirstValue = firstValue;
-            SecondValue = secondValue;
-            ThirdValue = thirdValue;
+            ActionValue = actionValue;
+            FirstFuncValue = firstFuncValue;
+            SecondFuncValue = secondFuncValue;
+            PredicateValue = predicateValue;
             FirstValueChangeHandler += NotifyActionFieldsChange;
-            SecondValueChangeHandler += NotifyFuncFieldsChange;
+            SecondValueChangeHandler += NotifyfFirstFuncFieldsChange;
             ThirdValueChangeHandler += NotifyPredicateFieldsChange;
+            FourthValueChangeHandler += NotifySecondFuncFieldsChange;
         }
         #endregion
 
         #region Events
         /// <summary>
-        /// Event for changing the first value
+        /// Event for changing the actionValue
         /// </summary>
         event Action<object, int> FirstValueChangeHandler;
 
         /// <summary>
-        /// Event for changing the second value
+        /// Event for changing the firstFuncValue
         /// </summary>
         event Func<object, int, int> SecondValueChangeHandler;
 
         /// <summary>
-        /// Event for changing the third value
+        /// Event for changing the predicateValue
         /// </summary>
         event Predicate<int> ThirdValueChangeHandler;
+
+        /// <summary>
+        /// Event for changing the secondFuncValue
+        /// </summary>
+        event Func<int> FourthValueChangeHandler;
         #endregion
 
         #region Properties
         /// <summary>
         /// First Value
         /// </summary>
-        public int FirstValue
+        public int ActionValue
         {
-            get => _firstValue;
+            get => _actionValue;
             set
             {
-                FirstValueChangeHandler?.Invoke(this, _firstValue);
-                _firstValue = value;
+                FirstValueChangeHandler?.Invoke(this, _actionValue);
+                _actionValue = value;
             }
         }
 
         /// <summary>
-        /// Second Value
+        /// First Func Value
         /// </summary>
-        public int SecondValue
+        public int FirstFuncValue
         {
-            get => _secondValue;
+            get => _firstFuncValue;
             set
             {
-                SecondValueChangeHandler?.Invoke(this, _secondValue);
-                _secondValue = value;               
+                SecondValueChangeHandler?.Invoke(this, _firstFuncValue);
+                _firstFuncValue = value;               
+            }
+        }
+
+        /// <summary>
+        /// Second Func Value
+        /// </summary>
+        public int SecondFuncValue
+        {
+            get => _secondFuncValue;
+            set
+            {
+                _firstFuncValue = value;
+                FourthValueChangeHandler?.Invoke();
             }
         }
 
         /// <summary>
         /// Third Value
         /// </summary>
-        public int ThirdValue
+        public int PredicateValue
         {
-            get => _thirdValue;
+            get => _predicateValue;
             set
             {
-                _thirdValue = value;
+                _predicateValue = value;
                 ThirdValueChangeHandler?.Invoke(value);
             }
         }
@@ -103,7 +134,7 @@ namespace ThirdTask
         public void NotifyActionFieldsChange(object sender, int value)
         {
             var newSender = sender as DelegateClass;
-            Console.WriteLine($"The value: {newSender._firstValue} was change by {newSender}!");
+            Console.WriteLine($"The value: {newSender._actionValue} was change by {newSender}!");
         }
 
         /// <summary>
@@ -112,11 +143,22 @@ namespace ThirdTask
         /// <param name="sender">The type object where the event occurred</param>
         /// <param name="value">Value that has been changed</param>
         /// <returns>Returns sum of all fields</returns>
-        public int NotifyFuncFieldsChange(object sender, int value)
+        public int NotifyfFirstFuncFieldsChange(object sender, int value)
         {
             var newSender = sender as DelegateClass;
-            var sum = _firstValue + _secondValue + _thirdValue;
-            Console.WriteLine($"The value: {value} was change by {newSender}! Sum: {newSender._firstValue} + {newSender._secondValue} + {newSender._thirdValue} = {sum}");
+            var sum = _actionValue + _firstFuncValue + _predicateValue;
+            Console.WriteLine($"The value: {value} was change by {newSender}! Sum: {newSender?._actionValue} + {newSender?._firstFuncValue} + {newSender?._predicateValue} + {newSender?._secondFuncValue} = {sum}");
+            return sum;
+        }
+
+        /// <summary>
+        /// Notifies of a change in the value of one of the fields
+        /// </summary>
+        /// <returns>Returns sum of all fields</returns>
+        public int NotifySecondFuncFieldsChange()
+        {
+            var sum = _actionValue + _firstFuncValue + _predicateValue;
+            Console.WriteLine($"The value was change! Sum: {_actionValue} + {_firstFuncValue} + {_predicateValue} + {_secondFuncValue} = {sum}");
             return sum;
         }
 
